@@ -1,0 +1,11 @@
+[book]
+authors = ["emdneto"]
+language = "en"
+multilingual = true
+src = "src"
+title = "OpenTelemetry By Example"
+
+
+[output.html.fold]
+enable = true
+level = 0
