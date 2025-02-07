@@ -42,7 +42,7 @@ matrix = []
 for sdir in snippet_dirs:
     chunks = sdir.split("/")
     name = ":".join(chunks[1:])
-    matrix.append({"name ": name, "dir": sdir})
+    matrix.append({"name": name, "dir": sdir})
 
 # Output the matrix in the format that GitHub Actions can parse:
 # We'll print a line like `matrix=[ ...json... ]` so the step can do python matrix.py >> $GITHUB_OUTPUT

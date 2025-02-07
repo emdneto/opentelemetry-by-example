@@ -65,7 +65,7 @@ jobs:
         run: echo "${{ steps.build-matrix.outputs.matrix }}"
 
   test:
-    name: "python:${{ matrix.snippet.name }}"
+    name: "${{ matrix.snippet.name }}"
     runs-on: ubuntu-latest
     needs: [changed-files]
     permissions:
