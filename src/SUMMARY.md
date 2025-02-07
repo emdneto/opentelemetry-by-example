@@ -13,7 +13,7 @@
 - [Java](java/README.md)
 - [JavaScript / TypeScript](javascript/README.md)
 - [PHP](php/README.md)
-- [Python](python/hello-world/index.md)
+- [Python](python/hello-world/snippet.md)
 - [Ruby](ruby/README.md)
 - [Rust](rust/README.md)
 - [Swift](swift/README.md)

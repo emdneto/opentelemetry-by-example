@@ -2,7 +2,13 @@
     "pull_request": {
       "labels": [
         {
-          "name": "ci:python"
+          "name": "python"
+        },
+        {
+          "name": "ci"
+        },
+        {
+          "name": "test"
         }
       ]
     }
