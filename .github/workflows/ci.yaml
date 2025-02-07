@@ -1,4 +1,4 @@
-name: CI
+name: MDBook Test
 on:
   pull_request:
   push:
@@ -9,7 +9,6 @@ env:
     MDBOOK_VERSION: v0.4.44
 jobs:
   test:
-    name: Test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
