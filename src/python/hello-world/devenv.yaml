@@ -1,0 +1,8 @@
+inputs:
+  root:
+    url: git+file://../
+    flake: false
+imports:
+  - root/common/process.nix
+  - root/common/python.nix
+  #- root/common/test.nix

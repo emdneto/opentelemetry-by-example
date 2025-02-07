@@ -1,0 +1,9 @@
+{
+    "pull_request": {
+      "labels": [
+        {
+          "name": "ci:python"
+        }
+      ]
+    }
+  }

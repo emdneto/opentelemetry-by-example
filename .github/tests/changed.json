@@ -1,0 +1,18 @@
+{
+    "env": {
+        "GITHUB_REF_NAME": "main"
+    },
+    "pull_request": {
+      "number": 4371,
+      "head": {
+        "ref": "xyz",
+        "sha": "1234567890abcdef1234567890abcdef12345678"
+      },
+      "base": {
+        "ref": "main"
+      },
+      "user": {
+        "login": "bot"
+      }
+    }
+  }

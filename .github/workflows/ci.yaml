@@ -1,7 +1,7 @@
 name: CI
 on: [push, pull_request]
 env:
-    MDBOOK_VERSION: v0.4.43
+    MDBOOK_VERSION: v0.4.44
 jobs:
   test:
     name: Test
