@@ -12,6 +12,7 @@ jobs:
     uses: ./.github/workflows/snippets.yaml
     permissions:
       id-token: write
+      contents: read
     with:
       snippet_dir: "src/python"
 
