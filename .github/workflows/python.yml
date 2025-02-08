@@ -10,6 +10,8 @@ on:
 jobs:
   run-python-snippets:
     uses: ./.github/workflows/snippets.yaml
+    permissions:
+      id-token: write
     with:
       snippet_dir: "src/python"
 
