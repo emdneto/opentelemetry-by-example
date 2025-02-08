@@ -1,4 +1,4 @@
-name: Test Python Snippets
+name: Python
 
 on:
   pull_request:
@@ -7,104 +7,119 @@ on:
   schedule:
     - cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC daily
 
-env:
-  SNIPPET_DIR: src/python
-
-permissions:
-  contents: read
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  changed-files:
-    name: Determine snippets to test
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.build-matrix.outputs.matrix }}
-    steps:
-      - uses: actions/checkout@v4
+  run-python-snippets:
+    uses: ./.github/workflows/snippets.yaml
+    with:
+      snippet_dir: "src/python"
 
-      - name: Determine test scope
-        id: check-label
-        run: |
-          if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            echo "all_snippets=true" >> $GITHUB_OUTPUT
-          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            # Convert the array of labels to a single space-delimited string
-            LABELS=" ${{ join(github.event.pull_request.labels.*.name) }} "
+# name: Test Python Snippets
 
-            # Check if LABELS *contains* both "ci" and "python"
-            if [[ "$LABELS" == *"ci"* && "$LABELS" == *"python"* ]]; then
-              echo "all_snippets=true" >> $GITHUB_OUTPUT
-            else
-              echo "all_snippets=false" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "all_snippets=false" >> $GITHUB_OUTPUT
-          fi
+# on:
+#   pull_request:
+#     paths:
+#       - 'src/python/**'
+#   schedule:
+#     - cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC daily
 
-      - name: Get changed files
-        if: steps.check-label.outputs.all_snippets == 'false'
-        id: changed-files
-        uses: tj-actions/changed-files@v44
-        with:
-          matrix: true
-          json: true
-          dir_names: true
-          dir_names_exclude_current_dir: true
-          files: ${{ env.SNIPPET_DIR }}/**
+# env:
+#   SNIPPET_DIR: src/python
 
-      - name: Generate matrix
-        id: build-matrix
-        run: |
-            set -x
-            python .github/scripts/matrix.py >> $GITHUB_OUTPUT
-        env:
-          ALL_SNIPPETS: ${{ steps.check-label.outputs.all_snippets }}
-          SNIPPET_DIR: ${{ env.SNIPPET_DIR }}
-          CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+# permissions:
+#   contents: read
 
-      - name: Print final matrix
-        run: echo "${{ steps.build-matrix.outputs.matrix }}"
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+#   cancel-in-progress: true
 
-  test:
-    name: "${{ matrix.snippet.name }}"
-    runs-on: ubuntu-latest
-    needs: [changed-files]
-    permissions:
-      id-token: "write"
-      contents: "read"
-    strategy:
-      matrix:
-        snippet: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
-      max-parallel: 4
-      fail-fast: false
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/flakehub-cache-action@main
+# jobs:
+#   changed-files:
+#     name: Determine snippets to test
+#     runs-on: ubuntu-latest
+#     outputs:
+#       matrix: ${{ steps.build-matrix.outputs.matrix }}
+#     steps:
+#       - uses: actions/checkout@v4
 
-      # - name: Setup Nix
-      #   uses: cachix/install-nix-action@v25
-      #   with:
-      #     nix_path: nixpkgs=channel:nixos-unstable
+#       - name: Determine test scope
+#         id: check-label
+#         run: |
+#           if [[ "${{ github.event_name }}" == "schedule" ]]; then
+#             echo "all_snippets=true" >> $GITHUB_OUTPUT
+#           elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+#             # Convert the array of labels to a single space-delimited string
+#             LABELS=" ${{ join(github.event.pull_request.labels.*.name) }} "
 
-      # - name: Configure Cachix
-      #   uses: cachix/cachix-action@v14
-      #   with:
-      #     name: devenv
+#             # Check if LABELS *contains* both "ci" and "python"
+#             if [[ "$LABELS" == *"ci"* && "$LABELS" == *"python"* ]]; then
+#               echo "all_snippets=true" >> $GITHUB_OUTPUT
+#             else
+#               echo "all_snippets=false" >> $GITHUB_OUTPUT
+#             fi
+#           else
+#             echo "all_snippets=false" >> $GITHUB_OUTPUT
+#           fi
 
-      - name: Install devenv
-        run: nix profile install nixpkgs#devenv
+#       - name: Get changed files
+#         if: steps.check-label.outputs.all_snippets == 'false'
+#         id: changed-files
+#         uses: tj-actions/changed-files@v44
+#         with:
+#           matrix: true
+#           json: true
+#           dir_names: true
+#           dir_names_exclude_current_dir: true
+#           files: ${{ env.SNIPPET_DIR }}/**
 
-      - name: Devenv CI
-        working-directory: ${{ matrix.snippet.dir }}
-        run: devenv ci
+#       - name: Generate matrix
+#         id: build-matrix
+#         run: |
+#             set -x
+#             python .github/scripts/matrix.py >> $GITHUB_OUTPUT
+#         env:
+#           ALL_SNIPPETS: ${{ steps.check-label.outputs.all_snippets }}
+#           SNIPPET_DIR: ${{ env.SNIPPET_DIR }}
+#           CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
 
-      - name: Devenv Shell Lint
-        working-directory: ${{ matrix.snippet.dir }}
-        run: devenv shell -- lint
+#       - name: Print final matrix
+#         run: echo "${{ steps.build-matrix.outputs.matrix }}"
+
+#   test:
+#     name: "${{ matrix.snippet.name }}"
+#     runs-on: ubuntu-latest
+#     needs: [changed-files]
+#     permissions:
+#       id-token: "write"
+#       contents: "read"
+#     strategy:
+#       matrix:
+#         snippet: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
+#       max-parallel: 4
+#       fail-fast: false
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+#       - name: Install Nix
+#         uses: DeterminateSystems/nix-installer-action@main
+#       - uses: DeterminateSystems/flakehub-cache-action@main
+
+#       # - name: Setup Nix
+#       #   uses: cachix/install-nix-action@v25
+#       #   with:
+#       #     nix_path: nixpkgs=channel:nixos-unstable
+
+#       # - name: Configure Cachix
+#       #   uses: cachix/cachix-action@v14
+#       #   with:
+#       #     name: devenv
+
+#       - name: Install devenv
+#         run: nix profile install nixpkgs#devenv
+
+#       - name: Devenv CI
+#         working-directory: ${{ matrix.snippet.dir }}
+#         run: devenv ci
+
+#       - name: Devenv Shell Lint
+#         working-directory: ${{ matrix.snippet.dir }}
+#         run: devenv shell -- lint

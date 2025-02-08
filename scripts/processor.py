@@ -40,8 +40,17 @@ def process_content(content):
     before = content[:match.start()]
     after = content[match.end():]
     new_content = before + updated_block + after
-    
+
     return new_content
+
+def recursive_process(chapter):
+    content = chapter.get("content", "")
+    chapter["content"] = process_content(content)
+
+    # If the chapter has sub-items, recursively process each one.
+    for sub_item in chapter.get("sub_items", []):
+        # Process the content of the sub-item (which is also a chapter)
+        recursive_process(sub_item.get("Chapter"))
 
 if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == "supports":
@@ -54,10 +63,7 @@ if __name__ == '__main__':
         if not isinstance(section, dict):
             continue
 
-        chapter = section.get('Chapter', {})
-        content = chapter.get('content', '')
-
-        chapter['content'] = process_content(content)
+        recursive_process(section["Chapter"])
 
     # Output the modified book
     print(json.dumps(book))

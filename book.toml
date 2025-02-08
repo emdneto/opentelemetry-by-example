@@ -9,8 +9,12 @@ title = "OpenTelemetry By Example"
 enable = true
 level = 0
 
+[build]
+create-missing = false
+
 [output.html]
-git-repository-url = "https://github.com/emdneto/otel-by-example"
+git-repository-url = "https://github.com/emdneto/opentelemetry-by-example"
+edit-url-template = "https://github.com/emdneto/opentelemetry-by-example/edit/main/{path}"
 
 [preprocessor.deps]
 after = [ "links" ]

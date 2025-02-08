@@ -41,7 +41,7 @@ else:
 matrix = []
 for sdir in snippet_dirs:
     chunks = sdir.split("/")
-    name = ":".join(chunks[1:])
+    name = ":".join(chunks[2:])
     matrix.append({"name": name, "dir": sdir})
 
 # Output the matrix in the format that GitHub Actions can parse:
