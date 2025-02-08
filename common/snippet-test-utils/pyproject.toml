@@ -1,0 +1,14 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "snippet-test-utils"
+description = "Test utilities for snippets"
+requires-python = ">=3.13"
+version = "0.0.0"
+dependencies = [
+    "requests>=2.28.0",
+    "unittest2>=1.1.0"
+]
+

@@ -1,0 +1,21 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+processors:
+extensions:
+  health_check:
+exporters:
+  debug:
+    verbosity: detailed
+  otlp:
+    endpoint: http://localhost:4319
+    compression: none
+    tls:
+      insecure: true
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [otlp, debug]

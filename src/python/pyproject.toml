@@ -1,0 +1,31 @@
+[tool.pyright]
+typeCheckingMode = "strict"
+reportMissingTypeStubs = false
+
+[tool.pytest.ini_options]
+addopts = "-p no:cacheprovider"
+
+[tool.ruff]
+# https://docs.astral.sh/ruff/configuration/
+target-version = "py313"
+line-length = 79
+output-format = "concise"
+
+[tool.ruff.lint]
+select = [
+  "I",
+  "B",
+  "W",
+  "F401",
+  "E722",
+  "ARG",
+  "TC004",
+  "TC005",
+  "TID251",
+]
+
+[tool.ruff.lint.isort]
+length-sort = true
+combine-as-imports = true
+length-sort-straight = true
+known-first-party = ["opentelemetry"]

@@ -1,0 +1,15 @@
+{
+    "pull_request": {
+      "labels": [
+        {
+          "name": "python"
+        },
+        {
+          "name": "ci"
+        },
+        {
+          "name": "test"
+        }
+      ]
+    }
+  }

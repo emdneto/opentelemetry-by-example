@@ -1,18 +1,17 @@
-name: CI
-on: [push, pull_request]
+name: MDBook CI
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
 env:
-    MDBOOK_VERSION: v0.4.43
+    MDBOOK_VERSION: v0.4.44
 jobs:
   test:
-    name: Test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Install Rust
-      run: |
-        rustup set profile minimal
-        rustup toolchain install stable
-        rustup default stable
+    - uses: actions/checkout@v4
     - name: Install latest mdbook
       run: |
         url="https://github.com/rust-lang/mdbook/releases/download/${MDBOOK_VERSION}/mdbook-${MDBOOK_VERSION}-x86_64-unknown-linux-gnu.tar.gz"

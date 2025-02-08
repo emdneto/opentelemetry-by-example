@@ -1,10 +1,10 @@
-name: Deploy
+name: MDBook Deploy
 on:
   push:
     branches:
       - main
 env:
-    MDBOOK_VERSION: v0.4.43
+    MDBOOK_VERSION: v0.4.44
 
 jobs:
   deploy:
