@@ -77,7 +77,6 @@ jobs:
     needs: [changed-files]
     permissions:
       id-token: write
-      contents: read
     strategy:
       matrix:
         snippet: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
