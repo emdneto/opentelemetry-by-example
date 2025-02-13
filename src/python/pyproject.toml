@@ -1,10 +1,7 @@
 [tool.pyright]
 typeCheckingMode = "strict"
 reportMissingTypeStubs = false
-exclude = [
-    "**/__pycache__",
-    "**/.*",
-]
+include = ["."]
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"
