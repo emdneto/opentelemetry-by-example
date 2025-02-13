@@ -89,7 +89,7 @@ jobs:
         with:
           primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles('**/*.nix', '**/*.lock') }}
           restore-prefixes-first-match: nix-${{ inputs.stack }}-
-          gc-max-store-size-linux: 2073741824
+          gc-max-store-size: 3073741824
           purge: true
           purge-prefixes: nix-${{ inputs.stack }}-
           purge-last-accessed: 86400
