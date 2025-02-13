@@ -8,7 +8,7 @@ on:
     - cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC daily
 
 jobs:
-  test:
+  snippets:
     uses: ./.github/workflows/snippets.yaml
     permissions:
       id-token: write
