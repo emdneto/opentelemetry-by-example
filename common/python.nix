@@ -1,8 +1,9 @@
-{ pkgs, config, inputs, lib, ...}:
+{ pkgs, inputs, ...}:
 let
   nixpkgs-unstable = import inputs.nixpkgs-unstable { system = pkgs.stdenv.system; };
   sink = ./sink;
   snippetTestUtils = ./snippet-test-utils;
+  # We need that file to able to install snippetTestUtils in the venv
   testRequirements = pkgs.writeText "test-requirements.txt" ''
     pip
     pyright
@@ -24,20 +25,6 @@ in
       -r ${testRequirements}
     '';
   };
-
-    enterShell = ''
-      echo
-      echo [opentelemetry-by-example] Entering shell
-      echo "••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"
-      echo
-      echo Available commands:
-      echo "••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"
-      echo
-      ${pkgs.gnused}/bin/sed -e 's| |••|g' -e 's|=| |' <<EOF | ${pkgs.util-linuxMinimal}/bin/column -t | ${pkgs.gnused}/bin/sed -e 's|^|- |' -e 's|••| |g'
-      ${lib.generators.toKeyValue {} (lib.mapAttrs (name: value: value.description) config.scripts)}
-      EOF
-      echo
-  '';
 
   scripts.run-tests.exec = "pytest";
   scripts.lint.exec = ''

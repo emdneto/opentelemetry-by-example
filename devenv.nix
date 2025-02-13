@@ -29,7 +29,12 @@
   enterShell = ''
 
   '';
-
+  scripts.auto-gc.exec = ''
+    devenv gc
+    find . -name ".devenv*" -exec rm -rf {} +
+    find . -name ".*_cache" -exec rm -rf {} +
+    find . -name "__pycache__" -exec rm -rf {} +
+  '';
   # https://devenv.sh/tasks/
   # tasks = {
   #   "myproj:setup".exec = "mytool build";

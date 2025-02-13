@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, ... }:
+{ pkgs, lib, inputs, config, ... }:
 let
   sink = ./sink;
   nixpkgs-unstable = import inputs.nixpkgs-unstable { system = pkgs.stdenv.system; };
@@ -34,6 +34,26 @@ in
     processes.opentelemetry-collector.process-compose = {
         depends_on.sink.condition = "process_healthy";
     };
+
+    enterShell = lib.mkAfter ''
+      echo
+      echo [opentelemetry-by-example] Entering shell
+      echo
+      echo "••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"
+      echo Available services:
+      echo
+      echo "••• OpenTelemetry Collector Contrib -- 4317/gRPC, 4318/HTTP"
+      echo "••• OTLP Backend -- 8080/HTTP, 4319/gRPC"
+      echo "••• Start services with 'process-compose up'"
+      echo
+      echo "••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"
+      echo Available commands:
+      echo
+      ${pkgs.gnused}/bin/sed -e 's| |••|g' -e 's|=| |' <<EOF | ${pkgs.util-linuxMinimal}/bin/column -t | ${pkgs.gnused}/bin/sed -e 's|^|- |' -e 's|••| |g'
+      ${lib.generators.toKeyValue {} (lib.mapAttrs (name: value: value.description) config.scripts)}
+      EOF
+      echo
+    '';
 
     enterTest = lib.mkBefore ''
         # Wait for the port to be open until the timeout is reached
