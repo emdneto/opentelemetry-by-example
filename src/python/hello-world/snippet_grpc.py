@@ -17,4 +17,5 @@ tracer = trace.get_tracer(__name__, attributes={"scope": "foo"})
 # Starts and sets an attribute to a span
 with tracer.start_as_current_span("HelloWorldSpanGrpc") as span:
     span.set_attribute("foo", "grpc")
+    span.add_event("event in span")
     print("Hello world")

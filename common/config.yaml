@@ -15,7 +15,14 @@ exporters:
     tls:
       insecure: true
 service:
+  extensions: [health_check]
   pipelines:
     traces:
+      receivers: [otlp]
+      exporters: [otlp, debug]
+    metrics:
+      receivers: [otlp]
+      exporters: [otlp, debug]
+    logs:
       receivers: [otlp]
       exporters: [otlp, debug]
