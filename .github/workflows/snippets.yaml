@@ -34,7 +34,7 @@ jobs:
             # Convert the array of labels to a single space-delimited string
             LABELS=" ${{ join(github.event.pull_request.labels.*.name) }} "
             # Check if LABELS contains both "ci" and "python"
-            if [[ "$LABELS" == *"ci"* && "$LABELS" == *"python"* ]]; then
+            if [[ "$LABELS" == *"trigger-ci"* && "$LABELS" == *"${{ inputs.stack }}"* ]]; then
               echo "all_snippets=true" >> $GITHUB_OUTPUT
             else
               echo "all_snippets=false" >> $GITHUB_OUTPUT

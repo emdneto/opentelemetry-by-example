@@ -2,6 +2,7 @@ name: Python
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
     paths:
       - 'src/python/**'
   schedule:
