@@ -37,13 +37,12 @@ else:
         if any(cf.startswith(sdir) for cf in changed_files):
             snippet_dirs.append(sdir)
 
-# Build final matrix: each snippet is { "snippet": "python:hello-world", "dir": "src/python/hello-world" }
+# Build the final matrix: each snippet is mapped as name, dir{ "snippet": "python:hello-world", "dir": "src/python/hello-world" }
 matrix = []
 for sdir in snippet_dirs:
     chunks = sdir.split("/")
     name = ":".join(chunks[2:])
     matrix.append({"name": name, "dir": sdir})
 
-# Output the matrix in the format that GitHub Actions can parse:
-# We'll print a line like `matrix=[ ...json... ]` so the step can do python matrix.py >> $GITHUB_OUTPUT
+# In the end this prints a line like `matrix=[ ...json... ]` so the step can do python matrix.py >> $GITHUB_OUTPUT
 print(f"matrix={json.dumps(matrix)}")
