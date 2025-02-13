@@ -16,7 +16,6 @@ app = Flask(__name__)
 @app.route("/telemetry", methods=["GET"])
 def get_telemetry():
     try:
-        # return _handler.telemetry_to_json(), 200
         return parse_telemetry(handler.telemetry.to_dict()), 200
     except Exception as e:
         _logger.error(f"Error retrieving telemetry data: {e}", exc_info=True)

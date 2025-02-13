@@ -1,6 +1,7 @@
 [tool.pyright]
 typeCheckingMode = "strict"
 reportMissingTypeStubs = false
+include = ["."]
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"
@@ -29,3 +30,5 @@ length-sort = true
 combine-as-imports = true
 length-sort-straight = true
 known-first-party = ["opentelemetry"]
+
+[tool.mypy]

@@ -10,6 +10,7 @@ def parse_telemetry(data):
 
 
 def parse_metric_requests(metric_requests):
+    # TODO: Implement metrics parsing
     return metric_requests
 
 
@@ -49,8 +50,8 @@ def parse_trace_requests(trace_requests):
 
 
 def parse_log_requests(log_requests):
-    """Placeholder function for log requests."""
-    return log_requests  # Customize as needed based on your log structure
+    # TODO: Implement log parsing
+    return log_requests
 
 
 def parse_attributes(attributes):

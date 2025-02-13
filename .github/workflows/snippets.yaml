@@ -3,13 +3,13 @@ name: Test Snippets
 on:
   workflow_call:
     inputs:
-      snippet_dir:
+      stack:
         type: string
         description: "Directory containing the snippets"
         required: true
 
 env:
-  SNIPPET_DIR: ${{ inputs.snippet_dir }}
+  SNIPPET_DIR: src/${{ inputs.stack }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
@@ -34,7 +34,7 @@ jobs:
             # Convert the array of labels to a single space-delimited string
             LABELS=" ${{ join(github.event.pull_request.labels.*.name) }} "
             # Check if LABELS contains both "ci" and "python"
-            if [[ "$LABELS" == *"ci"* && "$LABELS" == *"python"* ]]; then
+            if [[ "$LABELS" == *"trigger-ci"* && "$LABELS" == *"${{ inputs.stack }}"* ]]; then
               echo "all_snippets=true" >> $GITHUB_OUTPUT
             else
               echo "all_snippets=false" >> $GITHUB_OUTPUT
@@ -82,10 +82,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/flakehub-cache-action@main
-      - name: Install devenv
+      - uses: nixbuild/nix-quick-install-action@master
+      - name: Restore and cache Nix store
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') }}
+        uses: nix-community/cache-nix-action@v5.1.0
+        with:
+          primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles('**/*.nix', '**/*.lock') }}
+          restore-prefixes-first-match: nix-${{ inputs.stack }}-
+          gc-max-store-size: 3073741824
+          purge: true
+          purge-prefixes: nix-${{ inputs.stack }}-
+          purge-last-accessed: 86400
+          purge-primary-key: never
+          save-always: true
+      - uses: cachix/cachix-action@v14
+        with:
+          name: devenv
+      - name: Install devenv.sh
         run: nix profile install nixpkgs#devenv
       - name: Devenv CI
         working-directory: ${{ matrix.snippet.dir }}
