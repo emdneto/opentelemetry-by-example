@@ -55,8 +55,8 @@ def get_telemetry(
 class SnippetTestBase(unittest.TestCase):
     """
     Base test class providing helper methods for retrieving spans, metrics,
-    and logs, and asserting their properties. This is installed by default
-    in all envirioments.
+    and logs, and asserting their properties. This is acessible by default
+    from all envirioments.
     """
 
     def get_spans(self, service_name: str) -> list[TelemetryItemT]:

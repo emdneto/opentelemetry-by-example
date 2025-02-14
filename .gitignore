@@ -98,3 +98,4 @@ devenv.local.nix
 # pre-commit
 .pre-commit-config.yaml
 src/playground/*
+index.html

@@ -1,6 +1,6 @@
 # Summary
 
-[OpenTelemetry By Example](README.md)
+[OpenTelemetry By Example](../README.md)
 
 -----------
 - [C++]()
