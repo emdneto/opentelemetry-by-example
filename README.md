@@ -5,9 +5,6 @@ OpenTelemetry By Example is a curated collection of reproducible code snippets t
 Whether you're instrumenting your application with OpenTelemetry using your favorite programming language or configuring components like the [OpenTelemetry Collector][collector], this repository serves as your definitive, state-of-the-art reference for learning OpenTelemetry with
 hands-on examples.
 
-[opentelemetry]: https://opentelemetry.io
-[collector]: https://opentelemetry.io/docs/collector/
-
 ## Supported Snippets
 
 | Snippet    | CI |
@@ -18,3 +15,5 @@ hands-on examples.
 
 [python]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/python.yml/badge.svg
 [python-ci]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/python.yml
+[opentelemetry]: https://opentelemetry.io
+[collector]: https://opentelemetry.io/docs/collector/
