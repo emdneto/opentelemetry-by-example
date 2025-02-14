@@ -9,6 +9,7 @@
 
   packages = with pkgs; [
     mdbook
+    git
   ];
 
 
@@ -34,6 +35,10 @@
     find . -name ".devenv*" -exec rm -rf {} +
     find . -name ".*_cache" -exec rm -rf {} +
     find . -name "__pycache__" -exec rm -rf {} +
+  '';
+
+  scripts.auto-update.exec = ''
+    find . -type f -name "devenv.nix" -exec sh -c 'pushd "$(dirname "$1")" && devenv update' _ {} \;
   '';
   # https://devenv.sh/tasks/
   # tasks = {
