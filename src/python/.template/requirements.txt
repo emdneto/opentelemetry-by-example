@@ -1,3 +1,2 @@
 opentelemetry-distro
 opentelemetry-exporter-otlp
-flask
