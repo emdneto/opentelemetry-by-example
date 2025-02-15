@@ -1,0 +1,18 @@
+name: Go
+
+on:
+  pull_request:
+    types: [opened, synchronize, labeled]
+    paths:
+      - 'src/go/**'
+  schedule:
+    - cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC daily
+
+jobs:
+  snippets:
+    uses: ./.github/workflows/snippets.yaml
+    secrets: inherit
+    permissions:
+      id-token: write
+    with:
+      stack: "go"
