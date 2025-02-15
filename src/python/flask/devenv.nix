@@ -5,7 +5,7 @@
 
     enterShell = ''
         uv pip install -r requirements.txt
-        opentelemetry-bootstrap -a install
+        opentelemetry-bootstrap -a requirements | uv pip install --requirement -
     '';
 
     enterTest = ''
