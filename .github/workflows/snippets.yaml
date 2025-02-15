@@ -98,9 +98,7 @@ jobs:
           save-always: true
       - uses: cachix/cachix-action@v14
         with:
-          name: opentelemetry-by-example
-          extraPullNames: devenv
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          name: devenv
       - name: Install devenv.sh
         run: nix profile install nixpkgs#devenv
       - name: Devenv CI
