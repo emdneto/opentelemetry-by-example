@@ -1,10 +1,12 @@
 name: Go
 
 on:
+  push:
+    branches: [main]
+    paths: ['src/go/**']
   pull_request:
     types: [opened, synchronize, labeled]
-    paths:
-      - 'src/go/**'
+    paths: ['src/go/**']
   schedule:
     - cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC daily
 
