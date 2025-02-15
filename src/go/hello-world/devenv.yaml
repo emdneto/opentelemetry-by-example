@@ -1,0 +1,11 @@
+inputs:
+  nixpkgs-unstable:
+    url: github:NixOS/nixpkgs/nixpkgs-unstable
+  nixpkgs:
+    url: github:cachix/devenv-nixpkgs/rolling
+  root:
+    url: git+file://../
+    flake: false
+imports:
+  - root/common/process.nix
+  - root/common/go.nix
