@@ -9,10 +9,9 @@ in
   languages.go.enable = true;
   languages.go.package = nixpkgs-unstable.go;
 
-#   scripts.lint.exec = ''
-#     echo "• Running lint"
-
-#   '';
+  scripts.lint.exec = ''
+    echo "• Running lint"
+  '';
 
   enterTest = ''
     run-tests
