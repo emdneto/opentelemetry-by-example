@@ -7,10 +7,10 @@ in
 
   languages.python = {
     enable = true;
-    package = nixpkgs-unstable.python313;
+    package = pkgs.python313;
     venv.enable = true;
     uv.enable = true;
-    uv.package = nixpkgs-unstable.uv;
+    uv.package = pkgs.uv;
     venv.requirements = ''
       pytest
       -e ${snippetTestUtils}
