@@ -86,7 +86,8 @@ jobs:
       - uses: actions/setup-java@v4
         if: ${{ inputs.stack == 'java' }}
         with:
-          distribution: 'temurin'
+          distribution: 'adopt'
+          java-version: '11'
           cache: 'gradle'
           cache-dependency-path: |
             src/java/*.gradle*
