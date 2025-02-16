@@ -1,0 +1,21 @@
+name: Java
+
+on:
+  push:
+    branches: [main]
+    paths: ['src/java/**']
+  pull_request:
+    types: [opened, synchronize, labeled]
+    paths: ['src/java/**']
+  schedule:
+    - cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC daily
+
+jobs:
+  snippets:
+    uses: ./.github/workflows/snippets.yaml
+    secrets: inherit
+    permissions:
+      id-token: write
+    with:
+      stack: "java"
+

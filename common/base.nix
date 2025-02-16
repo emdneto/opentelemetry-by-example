@@ -17,6 +17,6 @@ in
     '';
   };
 
-  scripts.run-tests.exec = "pytest";
+  scripts.run-tests.exec = "pytest -p no:cacheprovider";
 
 }

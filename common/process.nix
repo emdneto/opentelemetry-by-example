@@ -6,6 +6,7 @@ in
 {
     process.manager.implementation = "process-compose";
 
+    # https://devenv.sh/supported-services/opentelemetry-collector/
     services.opentelemetry-collector.enable = true;
     services.opentelemetry-collector.package = nixpkgs-unstable.opentelemetry-collector-contrib;
 

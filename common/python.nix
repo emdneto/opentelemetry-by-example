@@ -12,6 +12,7 @@ in
 
   imports = [./base.nix];
 
+  # https://devenv.sh/supported-languages/python/
   languages.python = {
     # we are using the defaults from ./base.nix but can customize this
 

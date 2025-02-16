@@ -30,7 +30,7 @@
   enterShell = ''
 
   '';
-  scripts.auto-gc.exec = ''
+  scripts.clean.exec = ''
     devenv gc
     find . -name ".devenv*" -exec rm -rf {} +
     find . -name ".*_cache" -exec rm -rf {} +
