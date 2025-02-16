@@ -13,10 +13,14 @@ hands-on examples.
 | -------- | ------- |
 | Python  | [![python]][python-ci] |
 | Go  | [![go]][go-ci] |
+| Java  | [![Java]][java-ci] |
 
 [python]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/python.yml/badge.svg?branch=main
 [python-ci]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/python.yml
 [go]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/go.yml/badge.svg?branch=main
 [go-ci]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/go.yml
+[java]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/java.yml/badge.svg?branch=main
+[java-ci]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/java.yml
+
 [opentelemetry]: https://opentelemetry.io
 [collector]: https://opentelemetry.io/docs/collector/
