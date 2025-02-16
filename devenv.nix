@@ -38,7 +38,7 @@
   '';
 
   scripts.auto-update.exec = ''
-    find . -type f -name "devenv.nix" -exec sh -c 'pushd "$(dirname "$1")" && devenv update' _ {} \;
+    find src/ -type f -name "devenv.nix" -exec sh -c 'pushd "$(dirname "$1")" && devenv update' _ {} \;
   '';
   # https://devenv.sh/tasks/
   # tasks = {
