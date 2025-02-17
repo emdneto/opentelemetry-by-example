@@ -92,20 +92,20 @@ jobs:
           cache-dependency-path: |
             src/java/*.gradle*
             src/java/**/*.gradle*
-      #- uses: nixbuild/nix-quick-install-action@master
-      # - name: Restore and cache Nix store
-      #   if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') }}
-      #   uses: nix-community/cache-nix-action@v5.1.0
-      #   with:
-      #     primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles('**/*.nix', '**/*.lock') }}
-      #     restore-prefixes-first-match: nix-${{ inputs.stack }}-
-      #     gc-max-store-size: 3073741824
-      #     purge: true
-      #     purge-prefixes: nix-${{ inputs.stack }}-
-      #     purge-last-accessed: 86400
-      #     purge-primary-key: never
-      #     save-always: true
-      - uses: cachix/install-nix-action@v30
+      - uses: nixbuild/nix-quick-install-action@master
+      - name: Restore and cache Nix store
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') }}
+        uses: nix-community/cache-nix-action@v5.1.0
+        with:
+          primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles(format('{0}/**/*.nix', matrix.snippet.dir), format('{0}/**/*.lock', matrix.snippet.dir)) }}
+          restore-prefixes-first-match: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}
+          gc-max-store-size: 3073741824
+          purge: true
+          purge-prefixes: nix-${{ inputs.stack }}-
+          purge-last-accessed: 86400
+          purge-primary-key: never
+          save-always: true
+      #- uses: cachix/install-nix-action@v30
       - uses: cachix/cachix-action@v15
         with:
           name: devenv
