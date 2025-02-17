@@ -1,6 +1,6 @@
 # OpenTelemetry By Example
 
-![docs][docs-ci]
+[![docs]][docs-ci]
 
 OpenTelemetry By Example is a curated collection of reproducible code snippets that demonstrate how to instrument applications using [OpenTelemetry][opentelemetry] capabilities. From basic setups to advanced use cases with popular frameworks and libraries, these snippets ensure you're always running with up-to-date versions and reliable best practices. Say goodbye to outdated examples—each snippet is designed to be clear, step-by-step, and guaranteed to work every time you run it.
 
