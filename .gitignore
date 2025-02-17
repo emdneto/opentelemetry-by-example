@@ -88,15 +88,17 @@ devenv.local.nix
 # direnv
 .direnv
 tmp
-# Devenv
-.devenv*
-devenv.local.nix
-
-# direnv
-.direnv
 
 # pre-commit
 .pre-commit-config.yaml
 src/playground/*
 index.html
 .DS_Store
+
+# hugo
+node_modules/
+public/
+resources/
+
+.hugo_build.lock
+

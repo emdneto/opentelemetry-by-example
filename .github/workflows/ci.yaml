@@ -1,22 +1,43 @@
-name: MDBook CI
+name: Hugo CI
 on:
   pull_request:
   push:
     branches:
       - main
 
-env:
-    MDBOOK_VERSION: v0.4.44
+permissions:
+  contents: read
+  pages: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Install latest mdbook
-      run: |
-        url="https://github.com/rust-lang/mdbook/releases/download/${MDBOOK_VERSION}/mdbook-${MDBOOK_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
-        mkdir bin
-        curl -sSL $url | tar -xz --directory=bin
-        echo "$(pwd)/bin" >> $GITHUB_PATH
-    - name: Run tests
-      run: mdbook test
+    - name: Checkout repo @ SHA - ${{ github.sha }}
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        fetch-depth: 0
+    - uses: cachix/install-nix-action@v26
+    - uses: cachix/cachix-action@v14
+      with:
+        name: devenv
+    - name: Install devenv.sh
+      run: nix profile install nixpkgs#devenv
+    - name: Setup Pages
+      id: pages
+      uses: actions/configure-pages@v5
+    - name: Build website
+      env:
+        HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
+        HUGO_ENVIRONMENT: production
+        HUGO_ENV: production
+      run: devenv shell -- hugo-build ${{ steps.pages.outputs.base_url }}

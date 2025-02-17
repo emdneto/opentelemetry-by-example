@@ -7,8 +7,12 @@
     uv.enable = true;
   };
 
+  languages.go = {
+    enable = true;
+  };
+
   packages = with pkgs; [
-    mdbook
+    hugo
     git
   ];
 
@@ -32,14 +36,22 @@
   '';
   scripts.clean.exec = ''
     devenv gc
-    find . -name ".devenv*" -exec rm -rf {} +
-    find . -name ".*_cache" -exec rm -rf {} +
-    find . -name "__pycache__" -exec rm -rf {} +
+    find . -type d \(
+        -name ".devenv*"
+        -o -name ".*_cache"
+        -o -name "__pycache__"
+        -o -name "build"
+        -o -name ".gradle"
+    \) -exec rm -rf {} +
   '';
 
   scripts.auto-update.exec = ''
     find src/ -type f -name "devenv.nix" -exec sh -c 'pushd "$(dirname "$1")" && devenv update' _ {} \;
   '';
+
+  scripts.hugo-dev.exec = "hugo server --buildDrafts --disableFastRender";
+  scripts.hugo-build.exec = ''hugo --gc --minify --baseURL "$1/"'';
+
   # https://devenv.sh/tasks/
   # tasks = {
   #   "myproj:setup".exec = "mytool build";

@@ -1,0 +1,139 @@
+title: OpenTelemetry By Example
+baseURL: https://emdneto.github.io/opentelemetry-by-example/
+languageCode: en-us
+timeout: "2m"
+enableRobotsTXT: true
+enableGitInfo: true
+
+enableInlineShortcodes: true
+
+outputs:
+  home: [HTML]
+  page: [HTML]
+  section: [HTML, RSS]
+
+build:
+  writeStats: true
+#   cachebusters:
+#     - source: "assets/watching/hugo_stats\\.json"
+#       target: "styles\\.css"
+#     - source: "(postcss|tailwind)\\.config\\.js"
+#       target: "css"
+#     - source: "assets/.*\\.(js|ts|jsx|tsx)"
+#       target: "js"
+#     - source: "assets/.*\\.(.*)$"
+#       target: "$1"
+
+module:
+  imports:
+    - path: github.com/imfing/hextra
+
+markup:
+  tableOfContents:
+    endLevel: 1
+  goldmark:
+    extensions:
+      linkify: false
+      passthrough:
+        delimiters:
+          block: [['\[', '\]'], ['$$', '$$']]
+          inline: [['\(', '\)']]
+    parser:
+      attribute:
+        block: true
+      wrapStandAloneImageWithinParagraph: false
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+
+menu:
+  main:
+    # - name: Home
+    #   url: https://tryhelix.ai/
+    #   weight: 1
+    - name: GitHub
+      weight: 2
+      url: "https://github.com/emdneto/opentelemetry-by-example"
+      params:
+        icon: github
+    - name: Search
+      weight: 1
+      params:
+        type: search
+
+params:
+  description: Modern, responsive, batteries-included Hugo theme for creating beautiful static websites.
+  navbar:
+    displayTitle: true
+    displayLogo: false
+    logo:
+      path: /logo.svg
+      dark: /logo.svg
+      link: /
+      width: 20
+      height: 10
+    width: wide
+
+  page:
+    # full (100%), wide (90rem), normal (1280px)
+    width: wide
+
+  theme:
+    # light | dark | system
+    default: system
+    displayToggle: true
+
+  footer:
+    enable: false
+    displayCopyright: true
+    displayPoweredBy: false
+    width: normal
+
+  displayUpdatedDate: true
+  dateFormat: "January 2, 2006"
+
+  # Search
+  # flexsearch is enabled by default
+  search:
+    enable: true
+    type: flexsearch
+
+    flexsearch:
+      # index page by: content | summary | heading | title
+      index: content
+
+  editURL:
+    enable: true
+    base: "https://github.com/emdneto/opentelemetry-by-example/edit/main/content"
+
+  highlight:
+    copy:
+      enable: true
+      # hover | always
+      display: hover
+  blog:
+    list:
+      displayTags: true
+
+  comments:
+    enable: false
+    type: giscus
+
+    # https://giscus.app/
+    giscus:
+      repo: imfing/hextra
+      repoId: R_kgDOJ9fJag
+      category: General
+      categoryId: DIC_kwDOJ9fJas4CY7gW
+      # mapping: pathname
+      # strict: 0
+      # reactionsEnabled: 1
+      # emitMetadata: 0
+      # inputPosition: top
+      # lang: en
+
+  searchbot:
+    urls:
+      websites: https://searchbot.tryhelix.ai/
+      bots: https://searchbot.tryhelix.ai/bots
