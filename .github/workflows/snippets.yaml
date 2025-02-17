@@ -97,7 +97,7 @@ jobs:
         if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') }}
         uses: nix-community/cache-nix-action@v5.1.0
         with:
-          primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles(format('{0}/**/*.nix', matrix.snippet.dir), format('{0}/**/*.lock', matrix.snippet.dir)) }}
+          primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles(format('{0}/*.nix', matrix.snippet.dir), format('{0}/*.lock', matrix.snippet.dir)) }}
           restore-prefixes-first-match: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}
           gc-max-store-size: 3073741824
           purge: true
