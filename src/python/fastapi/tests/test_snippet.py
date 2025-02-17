@@ -5,6 +5,42 @@ class Snippet(SnippetTestBase):
     def test_snippet_zero_code(self):
         spans = self.get_spans("fastapi-uvicorn-zero-code")
         self.assertEqual(len(spans), 3)
+
+        internal_http_send_span = spans[0]
+        internal_http_send_response_span = spans[1]
+        server_span = spans[2]
+
+        self.assert_span(
+            internal_http_send_span,
+            span_name="GET /foobar http send",
+            kind="INTERNAL",
+            attributes={
+                "http.status_code": 200,
+            },
+        )
+
+        self.assert_span(
+            internal_http_send_response_span,
+            span_name="GET /foobar http send",
+            kind="INTERNAL",
+            attributes={
+                "asgi.event.type": "http.response.body",
+            },
+        )
+
+        self.assert_span(
+            server_span,
+            span_name="GET /foobar",
+            kind="SERVER",
+            scope_name="opentelemetry.instrumentation.fastapi",
+            attributes={
+                "http.method": "GET",
+                "http.status_code": 200,
+                "http.target": "/foobar",
+                "http.scheme": "http",
+            },
+        )
+
         # present_attributes = [
         #     "net.host.name",
         #     "net.peer.port",

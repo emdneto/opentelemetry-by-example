@@ -1,6 +1,6 @@
 # OpenTelemetry By Example
 
-[![MDBook CI](https://github.com/emdneto/opentelemetry-by-example/actions/workflows/ci.yaml/badge.svg)](https://github.com/emdneto/opentelemetry-by-example/actions/workflows/ci.yaml)
+![docs][docs-ci]
 
 OpenTelemetry By Example is a curated collection of reproducible code snippets that demonstrate how to instrument applications using [OpenTelemetry][opentelemetry] capabilities. From basic setups to advanced use cases with popular frameworks and libraries, these snippets ensure you're always running with up-to-date versions and reliable best practices. Say goodbye to outdated examples—each snippet is designed to be clear, step-by-step, and guaranteed to work every time you run it.
 
@@ -15,6 +15,8 @@ hands-on examples.
 | Go  | [![go]][go-ci] |
 | Java  | [![Java]][java-ci] |
 
+[docs]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/ci.yaml/badge.svg?branch=main
+[docs-ci]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/ci.yaml
 [python]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/python.yml/badge.svg?branch=main
 [python-ci]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/python.yml
 [go]: https://github.com/emdneto/opentelemetry-by-example/actions/workflows/go.yml/badge.svg?branch=main
