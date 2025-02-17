@@ -4,7 +4,7 @@
     # processes.snippet.process-compose.environment = [  "OTEL_SERVICE_NAME=flask-zero-code" ];
 
     enterShell = ''
-        echo "entering shell"
+        echo "entering shell devenv"
         # uv pip install -r requirements.txt
         # opentelemetry-bootstrap -a install
     '';

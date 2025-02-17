@@ -8,7 +8,8 @@ on:
     types: [opened, synchronize, labeled]
     paths: ['src/python/**']
   schedule:
-    - cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC daily
+    - cron: '*/5 * * * *'
+    #- cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC daily
 
 jobs:
   snippets:
