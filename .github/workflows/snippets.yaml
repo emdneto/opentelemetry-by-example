@@ -92,33 +92,29 @@ jobs:
           cache-dependency-path: |
             src/java/*.gradle*
             src/java/**/*.gradle*
-      # - uses: nixbuild/nix-quick-install-action@master
-      # - name: Restore and cache Nix store
-      #   if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') }}
-      #   uses: nix-community/cache-nix-action@v5.2.1
-      #   with:
-      #     primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles(format('{0}/devenv.nix', matrix.snippet.dir), format('{0}/devenv.lock', matrix.snippet.dir)) }}
-      #     #restore-prefixes-first-match: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}
-      #     gc-max-store-size: 3073741824
-      #     purge: true
-      #     purge-prefixes: nix-${{ inputs.stack }}-
-      #     purge-last-accessed: 3600
-      #     purge-primary-key: never
-          #save-always: true
-      - uses: cachix/install-nix-action@v30
-        with:
-          extra_nix_config: |
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      - uses: nixbuild/nix-quick-install-action@master
       - uses: cachix/cachix-action@v15
         with:
           name: opentelemetry-by-example
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           extraPullNames: devenv
+      - name: Restore and cache Nix store
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') }}
+        uses: nix-community/cache-nix-action@v5
+        with:
+          primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles(format('{0}/devenv.nix', matrix.snippet.dir), format('{0}/devenv.lock', matrix.snippet.dir)) }}
+          #restore-prefixes-first-match: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}
+          gc-max-store-size: 3073741824
+          purge: true
+          purge-prefixes: nix-${{ inputs.stack }}-
+          purge-last-accessed: 3600
+          purge-primary-key: never
+          save-always: true
       - name: Install devenv.sh
         run: nix profile install nixpkgs#devenv
       - name: Devenv CI
         working-directory: ${{ matrix.snippet.dir }}
-        run: devenv ci
+        run: devenv ci -d
       - name: Devenv Shell Lint
         working-directory: ${{ matrix.snippet.dir }}
         run: devenv shell -- lint
