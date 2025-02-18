@@ -92,29 +92,22 @@ jobs:
           cache-dependency-path: |
             src/java/*.gradle*
             src/java/**/*.gradle*
-      #- uses: nixbuild/nix-quick-install-action@master
-      - uses: cachix/install-nix-action@v30
+      - uses: nixbuild/nix-quick-install-action@master
+      - name: Restore and cache Nix store
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') }}
+        uses: nix-community/cache-nix-action@v5
         with:
-          nix_path: nixpkgs=channel:nixos-unstable
+          primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles(format('{0}/devenv.nix', matrix.snippet.dir), format('{0}/devenv.lock', matrix.snippet.dir)) }}
+          #restore-prefixes-first-match: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}
+          gc-max-store-size: 3073741824
+          purge: true
+          purge-prefixes: nix-${{ inputs.stack }}-
+          purge-last-accessed: 3600
+          purge-primary-key: never
+          save-always: true
       - uses: cachix/cachix-action@v15
         with:
           name: devenv
-      # - name: Restore and cache Nix store
-      #   if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') }}
-      #   uses: nix-community/cache-nix-action@v5
-      #   with:
-      #     primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles(format('{0}/devenv.nix', matrix.snippet.dir), format('{0}/devenv.lock', matrix.snippet.dir)) }}
-      #     #restore-prefixes-first-match: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}
-      #     paths: |
-      #       /nix
-      #       ~/.cache/nix
-      #       ~root/.cache/nix
-      #     gc-max-store-size: 3073741824
-      #     purge: true
-      #     purge-prefixes: nix-${{ inputs.stack }}-
-      #     purge-last-accessed: 3600
-      #     purge-primary-key: never
-      #     save-always: true
       - name: Install devenv.sh
         run: nix profile install nixpkgs#devenv
       - name: Devenv CI
