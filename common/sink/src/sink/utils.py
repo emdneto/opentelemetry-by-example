@@ -10,8 +10,34 @@ def parse_telemetry(data):
 
 
 def parse_metric_requests(metric_requests):
-    # TODO: Implement metrics parsing
-    return metric_requests
+    metrics = []
+    for request in metric_requests:
+        pbreq = request.get("pbreq", {})
+        resource_metrics = pbreq.get("resourceMetrics", [])
+
+        for resource_metric in resource_metrics:
+            resource = resource_metric.get("resource", {})
+            resource_attributes = parse_attributes(resource.get("attributes", []))
+            scope_metrics = resource_metric.get("scopeMetrics", [])
+
+            for scope_metric in scope_metrics:
+                scope = scope_metric.get("scope", {})
+
+                for metric in scope_metric.get("metrics", []):
+                    data_points = metric.get("sum", {}).get("dataPoints", []) or metric.get("histogram", {}).get("dataPoints", [])
+                    data_points_attributes = parse_attributes(data_points[0].get("attributes", []))
+                    parsed_metric = {
+                        "name": metric.get("name"),
+                        "description": metric.get("description", ""),
+                        "unit": metric.get("unit", ""),
+                        "data_points": data_points,
+                        "resource": {"attributes": resource_attributes},
+                        "scope": scope,
+                    }
+
+                    metrics.append(parsed_metric)
+
+    return metrics
 
 
 def parse_trace_requests(trace_requests):

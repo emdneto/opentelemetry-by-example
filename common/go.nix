@@ -4,7 +4,6 @@ let
 in
 {
 
-  imports = [./base.nix];
   # https://devenv.sh/supported-languages/go/
   languages.go.enable = true;
   languages.go.package = nixpkgs-unstable.go;

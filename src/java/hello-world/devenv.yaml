@@ -7,5 +7,5 @@ inputs:
     url: git+file://../
     flake: false
 imports:
-  - root/common/process.nix
+  - root/common
   - root/common/java.nix
