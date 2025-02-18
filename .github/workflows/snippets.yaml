@@ -108,7 +108,6 @@ jobs:
             /nix
             ~/.cache/nix
             ~root/.cache/nix
-            ${{matrix.snippet.dir}}/.devenv
           gc-max-store-size: 3073741824
           purge: true
           purge-prefixes: nix-${{ inputs.stack }}-
