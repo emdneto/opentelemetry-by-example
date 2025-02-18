@@ -6,7 +6,7 @@ on:
     paths: ['src/python/**']
   pull_request:
     types: [opened, synchronize, labeled]
-    paths: ['src/python/**']
+    # paths: ['src/python/**']
   schedule:
     - cron: '*/5 * * * *'
     #- cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC daily
