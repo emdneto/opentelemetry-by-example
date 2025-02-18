@@ -4,8 +4,6 @@ let
 in
 {
 
-  imports = [./base.nix];
-
   # https://devenv.sh/supported-languages/java/#languagesjavaenable
   languages.java = {
     enable = true;

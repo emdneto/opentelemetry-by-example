@@ -1,7 +1,6 @@
 { pkgs, inputs, ...}:
 let
   nixpkgs-unstable = import inputs.nixpkgs-unstable { system = pkgs.stdenv.system; };
-  snippetTestUtils = ./snippet-test-utils;
   testRequirements = pkgs.writeText "test-requirements.txt" ''
     pyright
     mypy
@@ -10,7 +9,7 @@ let
 in
 {
 
-  imports = [./base.nix];
+  #imports = [./base.nix];
 
   # https://devenv.sh/supported-languages/python/
   languages.python = {

@@ -3,9 +3,8 @@ inputs:
     url: github:NixOS/nixpkgs/nixpkgs-unstable
   nixpkgs:
     url: github:cachix/devenv-nixpkgs/rolling
-  root:
-    url: git+file://../
-    flake: false
-imports:
-  - root/common
-  - root/common/go.nix
+  nixpkgs-python:
+    url: github:cachix/nixpkgs-python
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
