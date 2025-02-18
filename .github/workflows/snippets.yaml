@@ -104,6 +104,11 @@ jobs:
         with:
           primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles(format('{0}/devenv.nix', matrix.snippet.dir), format('{0}/devenv.lock', matrix.snippet.dir)) }}
           #restore-prefixes-first-match: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}
+          paths: |
+            /nix
+            ~/.cache/nix
+            ~root/.cache/nix
+            ${{matrix.snippet.dir}}/.devenv
           gc-max-store-size: 3073741824
           purge: true
           purge-prefixes: nix-${{ inputs.stack }}-
