@@ -4,6 +4,7 @@
     processes.snippet_uvicorn.process-compose.environment = [  "OTEL_SERVICE_NAME=fastapi-uvicorn-zero-code" ];
 
     enterShell = ''
+        echo "testing"
         uv pip install -r requirements.txt
         opentelemetry-bootstrap -a requirements | uv pip install --requirement -
     '';
