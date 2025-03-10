@@ -17,5 +17,6 @@ jobs:
     secrets: inherit
     permissions:
       id-token: write
+      contents: read
     with:
       stack: "python"
