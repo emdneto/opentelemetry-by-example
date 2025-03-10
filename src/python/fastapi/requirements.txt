@@ -1,4 +1,4 @@
 opentelemetry-distro
 opentelemetry-exporter-otlp
-fastapi
+fastapi==0.115.5
 uvicorn
