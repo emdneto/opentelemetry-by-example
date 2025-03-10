@@ -8,8 +8,8 @@ on:
     types: [opened, synchronize, labeled]
     # paths: ['src/python/**']
   schedule:
-    #- cron: '*/5 * * * *'
-    - cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC daily
+    - cron: '*/5 * * * *'
+    #- cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC daily
 
 jobs:
   snippets:
@@ -17,5 +17,6 @@ jobs:
     secrets: inherit
     permissions:
       id-token: write
+      contents: read
     with:
       stack: "python"

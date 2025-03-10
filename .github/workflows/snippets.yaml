@@ -74,7 +74,8 @@ jobs:
     needs: [changed-files]
     timeout-minutes: 10
     permissions:
-      id-token: write
+      id-token: "write"
+      contents: "read"
     strategy:
       matrix:
         snippet: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
@@ -83,6 +84,24 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - uses: nixbuild/nix-quick-install-action@master
+      - name: Restore and cache Nix store
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') }}
+        uses: nix-community/cache-nix-action@v5
+        with:
+          primary-key: cache-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles(format('{0}/devenv.nix', matrix.snippet.dir), format('{0}/devenv.lock', matrix.snippet.dir)) }}
+          paths: |
+            ${{ github.workspace }}/src/${{ inputs.stack }}/${{ matrix.snippet.name }}/.devenv
+          #restore-prefixes-first-match: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}
+          gc-max-store-size: 3073741824
+          purge: true
+          purge-prefixes: cache-${{ inputs.stack }}-${{ matrix.snippet.name }}-
+          purge-last-accessed: 3600
+          purge-primary-key: never
+          save-always: true
+      - uses: cachix/cachix-action@v15
+        with:
+          name: devenv
       - uses: actions/setup-java@v4
         if: ${{ inputs.stack == 'java' }}
         with:
@@ -92,22 +111,6 @@ jobs:
           cache-dependency-path: |
             src/java/*.gradle*
             src/java/**/*.gradle*
-      - uses: nixbuild/nix-quick-install-action@master
-      - name: Restore and cache Nix store
-        if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') }}
-        uses: nix-community/cache-nix-action@v5
-        with:
-          primary-key: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles(format('{0}/devenv.nix', matrix.snippet.dir), format('{0}/devenv.lock', matrix.snippet.dir)) }}
-          #restore-prefixes-first-match: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}
-          gc-max-store-size: 3073741824
-          purge: true
-          purge-prefixes: nix-${{ inputs.stack }}-
-          purge-last-accessed: 3600
-          purge-primary-key: never
-          save-always: true
-      - uses: cachix/cachix-action@v15
-        with:
-          name: devenv
       - name: Install devenv.sh
         run: nix profile install nixpkgs#devenv
       - name: Devenv CI
