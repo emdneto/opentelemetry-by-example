@@ -79,19 +79,19 @@ jobs:
     strategy:
       matrix:
         snippet: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
-      max-parallel: 4
+      max-parallel: 10
       fail-fast: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - uses: nixbuild/nix-quick-install-action@master
       - name: Restore and cache Nix store
-        if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') }}
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'Skip cache') && !contains(github.ref, 'main') }}
         uses: nix-community/cache-nix-action@v5
         with:
           primary-key: cache-${{ inputs.stack }}-${{ matrix.snippet.name }}-${{ hashFiles(format('{0}/devenv.nix', matrix.snippet.dir), format('{0}/devenv.lock', matrix.snippet.dir)) }}
           paths: |
-            ${{ github.workspace }}/src/${{ inputs.stack }}/${{ matrix.snippet.name }}/.devenv
+            ${{ matrix.snippet.dir }}/.devenv
           #restore-prefixes-first-match: nix-${{ inputs.stack }}-${{ matrix.snippet.name }}
           gc-max-store-size: 3073741824
           purge: true

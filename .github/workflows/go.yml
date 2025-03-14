@@ -15,6 +15,7 @@ jobs:
     uses: ./.github/workflows/snippets.yaml
     secrets: inherit
     permissions:
-      id-token: write
+      id-token: "write"
+      contents: "read"
     with:
       stack: "go"
