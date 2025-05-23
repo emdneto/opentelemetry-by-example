@@ -6,7 +6,7 @@ in
 
   # https://devenv.sh/supported-languages/go/
   languages.go.enable = true;
-  languages.go.package = nixpkgs-unstable.go;
+  #languages.go.package = nixpkgs-unstable.go;
 
   scripts.lint.exec = ''
     echo "• Running lint"
