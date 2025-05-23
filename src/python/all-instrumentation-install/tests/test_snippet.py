@@ -10,6 +10,8 @@ class Snippet(SnippetTestBase):
             span_name="all-instrumentation-install",
             kind="SPAN_KIND_INTERNAL",
             attributes={"foo": "bar"},
+            scope_name="snippet",
+            scope_attributes={"domain": "foo"},
         )
         print(spans[0])
         self.assertEqual(spans[0]["events"][0]["name"], "event in span")

@@ -54,6 +54,8 @@ def parse_trace_requests(trace_requests):
 
             for scope_span in scope_spans:
                 scope = scope_span.get("scope", {})
+                scope_attributes = parse_attributes(scope.get("attributes", []))
+                scope["attributes"] = scope_attributes
                 spans = scope_span.get("spans", [])
 
                 for span in spans:
