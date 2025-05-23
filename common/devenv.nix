@@ -11,7 +11,7 @@ in
     services.opentelemetry-collector.enable = true;
     services.opentelemetry-collector.package = nixpkgs-unstable.opentelemetry-collector-contrib;
 
-    services.opentelemetry-collector.configFile = ./config.yaml;
+    services.opentelemetry-collector.configFile = ./otelcol-config.yaml;
 
     processes.sink = {
         exec = "${nixpkgs-unstable.uv}/bin/uv run -p 3.13 --no-project --with-editable ${sink} obe-sink";
@@ -46,7 +46,7 @@ in
       echo
       echo "••• OpenTelemetry Collector Contrib -- 4317/gRPC, 4318/HTTP"
       echo "••• OTLP Backend -- 8080/HTTP, 4319/gRPC"
-      echo "••• Start services with 'process-compose up'"
+      echo "••• Start services with 'process-compose up -D'"
       echo
       echo "••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"
       echo Available commands:

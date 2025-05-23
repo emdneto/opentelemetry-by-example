@@ -37,9 +37,25 @@
     find . -name "__pycache__" -exec rm -rf {} +
   '';
 
-  scripts.auto-update.exec = ''
+  scripts.update-locks.exec = ''
     find src/ -type f -name "devenv.nix" -exec sh -c 'pushd "$(dirname "$1")" && devenv update' _ {} \;
   '';
+
+  scripts.rund.exec = ''
+    SNIPPET_DIR=src/$1
+    pushd $SNIPPET_DIR && devenv ci -d && popd
+  '';
+
+  scripts.run.exec = ''
+    SNIPPET_DIR=src/$1
+    pushd $SNIPPET_DIR && devenv ci && popd
+  '';
+
+  scripts.enter.exec = ''
+    SNIPPET_DIR=src/$1
+    pushd $SNIPPET_DIR && devenv shell && popd
+  '';
+
   # https://devenv.sh/tasks/
   # tasks = {
   #   "myproj:setup".exec = "mytool build";

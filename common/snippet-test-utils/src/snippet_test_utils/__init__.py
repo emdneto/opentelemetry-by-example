@@ -74,6 +74,7 @@ class SnippetTestBase(unittest.TestCase):
         span_name: str,
         kind: str,
         scope_name: str | None = None,
+        scope_attributes: dict[str, Any] | None = None,
         attributes: dict[str, Any] | None = None,
     ) -> None:
         self.assertEqual(
@@ -94,6 +95,12 @@ class SnippetTestBase(unittest.TestCase):
                 scope.get("name", ""),
                 scope_name,
                 f"Scope name mismatch. Expected '{scope_name}', got '{scope.get('name')}'."
+            )
+
+        if scope_attributes is not None:
+            self.assert_attributes_strict(
+                span.get("scope", {}).get("attributes", {}),
+                scope_attributes
             )
 
         if attributes is not None:

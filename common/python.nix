@@ -26,17 +26,17 @@ in
   };
 
   scripts.lint.exec = ''
+    set -eou pipefail
     echo "• Running ruff"
     ruff check --fix
     ruff format
     echo "• Running pyright"
     pyright
-    echo "• Running mypy"
-    mypy .
   '';
 
   # run-tests is defined at ./base.nix
   enterTest = ''
+    set -eou pipefail
     run-tests
   '';
 

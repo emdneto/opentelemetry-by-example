@@ -1,13 +1,15 @@
+import requests
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
     OTLPSpanExporter,
 )
 
 # Creates a resource and adds it to the tracer provider
-resource = Resource.create({"service.name": "hello-world-otlp-grpc"})
+resource = Resource.create({"service.name": "snippet-manual"})
 provider = TracerProvider(resource=resource)
 trace.set_tracer_provider(provider)
 
@@ -18,10 +20,6 @@ provider.add_span_processor(
     )
 )
 
-tracer = trace.get_tracer(__name__, attributes={"scope": "foo"})
-
-# Starts and sets an attribute to a span
-with tracer.start_as_current_span("HelloWorldSpanGrpc") as span:
-    span.set_attribute("foo", "grpc")
-    span.add_event("event in span")
-    print("Hello world")
+# You can optionally pass a custom TracerProvider to instrument().
+RequestsInstrumentor().instrument()
+response = requests.get(url="https://www.example.org/")
