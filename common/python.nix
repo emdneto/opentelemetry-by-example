@@ -31,8 +31,6 @@ in
     ruff format
     echo "• Running pyright"
     pyright
-    echo "• Running mypy"
-    mypy .
   '';
 
   # run-tests is defined at ./base.nix

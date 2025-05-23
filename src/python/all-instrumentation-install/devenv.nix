@@ -8,6 +8,6 @@
     '';
 
     enterTest = ''
-        python snippet.py
+        opentelemetry-instrument --service_name=snippet python snippet.py
     '';
 }

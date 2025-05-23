@@ -37,7 +37,7 @@ in
 
   enterTest = ''
     run-tests
-    kind delete cluster --name obe
+    ${pkgs.kind}/bin/kind delete cluster --name obe
   '';
 
 }

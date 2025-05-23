@@ -37,7 +37,7 @@
     find . -name "__pycache__" -exec rm -rf {} +
   '';
 
-  scripts.auto-update.exec = ''
+  scripts.update-locks.exec = ''
     find src/ -type f -name "devenv.nix" -exec sh -c 'pushd "$(dirname "$1")" && devenv update' _ {} \;
   '';
   # https://devenv.sh/tasks/

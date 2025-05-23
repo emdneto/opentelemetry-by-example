@@ -25,7 +25,8 @@ def parse_metric_requests(metric_requests):
 
                 for metric in scope_metric.get("metrics", []):
                     data_points = metric.get("sum", {}).get("dataPoints", []) or metric.get("histogram", {}).get("dataPoints", [])
-                    data_points_attributes = parse_attributes(data_points[0].get("attributes", []))
+                    for dp in data_points:
+                        dp["attributes"] = parse_attributes(dp.get("attributes", []))
                     parsed_metric = {
                         "name": metric.get("name"),
                         "description": metric.get("description", ""),
