@@ -38,7 +38,7 @@
   '';
 
   scripts.update-locks.exec = ''
-    find src/ -type f -name "devenv.nix" -exec sh -c 'pushd "$(dirname "$1")" && devenv update' _ {} \;
+    find . -type f -name "devenv.nix" -exec sh -c 'pushd "$(dirname "$1")" && devenv update' _ {} \;
   '';
 
   scripts.rund.exec = ''
