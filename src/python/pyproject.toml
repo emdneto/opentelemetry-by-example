@@ -23,7 +23,6 @@ select = [
   "TC004",
   "TC005",
   "TID251",
-  "T201",
 ]
 
 [tool.ruff.lint.isort]

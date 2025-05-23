@@ -10,7 +10,7 @@ in
     services.opentelemetry-collector.enable = true;
     services.opentelemetry-collector.package = nixpkgs-unstable.opentelemetry-collector-contrib;
 
-    services.opentelemetry-collector.configFile = ./config.yaml;
+    services.opentelemetry-collector.configFile = ./otelcol-config.yaml;
 
     processes.sink = {
         exec = "${pkgs.uv}/bin/uv run -p 3.13 --no-project --with-editable ${sink} obe-sink";
