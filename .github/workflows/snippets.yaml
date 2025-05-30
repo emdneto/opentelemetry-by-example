@@ -79,7 +79,7 @@ jobs:
       contents: "read"
     strategy:
       matrix:
-        snippet: ${{ fromJSON(needs.changed-files.outputs.matrix }}
+        snippet: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
       max-parallel: 10
       fail-fast: false
     steps:
