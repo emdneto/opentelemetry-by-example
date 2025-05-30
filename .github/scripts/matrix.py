@@ -37,6 +37,13 @@ else:
         if any(cf.startswith(sdir) for cf in changed_files):
             snippet_dirs.append(sdir)
 
+    # Fallback: if no specific snippet dirs were found but there are changed files in the snippet_dir,
+    # include all snippet dirs to ensure we test something
+    if not snippet_dirs and changed_files:
+        # Check if any changed file is under the snippet_dir
+        if any(cf.startswith(snippet_dir) for cf in changed_files):
+            snippet_dirs = found_snippet_dirs
+
 # Build the final matrix: each snippet is mapped as name, dir{ "snippet": "python:hello-world", "dir": "src/python/hello-world" }
 matrix = []
 for sdir in snippet_dirs:
