@@ -1,6 +1,6 @@
 site_name: OpenTelemetry By Example
-site_description: Curated collection of reproducible OpenTelemetry code snippets
-site_url: https://emdnet.github.io/opentelemetry-by-example
+site_description: Curated collection of reproducible OpenTelemetry snippets
+site_url: https://emdneto.github.io/opentelemetry-by-example
 
 repo_name: emdneto/opentelemetry-by-example
 repo_url: https://github.com/emdneto/opentelemetry-by-example
@@ -64,11 +64,7 @@ plugins:
   - macros:
       module_name: mkdocs_macros
 
-extra:
-  social:
-    - icon: fontawesome/brands/mastodon
-      link: https://fosstodon.org/@squidfunk
-      name: squidfunk on Fosstodon
+extra: {}
 
 nav:
   - Introduction: README.md
