@@ -12,6 +12,7 @@
 # --8<-- [start:code]
 import time
 import threading
+from typing import Any
 
 import requests
 from flask import Flask, jsonify, request
@@ -60,7 +61,7 @@ def start_server():
     app.run(host="localhost", port=5001, debug=False, use_reloader=False)
 
 
-def make_http_request() -> dict:
+def make_http_request() -> dict[str, Any]:
     with tracer.start_as_current_span("client_operation") as span:
         span.set_attribute("client.operation", "fetch_data")
         span.add_event("Making HTTP request")

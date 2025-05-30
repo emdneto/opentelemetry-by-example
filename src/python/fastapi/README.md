@@ -37,7 +37,7 @@ opentelemetry-bootstrap -a requirements | uv pip install -r -
 === "Uvicorn"
 
     ``` py linenums="1" title="snippet_uvicorn_manual.py"
-    --8<-- "src/python/fastapi/snippet_uvicorn_manual.py"
+    --8<-- "src/python/fastapi/snippet_uvicorn_manual.py:code"
     ```
 
     !!! tip "Run this snippet"

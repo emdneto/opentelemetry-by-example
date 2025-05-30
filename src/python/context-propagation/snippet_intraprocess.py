@@ -9,6 +9,7 @@
 
 # --8<-- [start:code]
 import time
+from typing import Any
 
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
@@ -33,7 +34,7 @@ provider.add_span_processor(
 tracer = trace.get_tracer(__name__)
 
 
-def fetch_data(item_id: str) -> dict:
+def fetch_data(item_id: str) -> dict[str, Any]:
     with tracer.start_as_current_span("fetch_data") as span:
         span.set_attribute("item.id", item_id)
         time.sleep(0.1)
@@ -43,7 +44,7 @@ def fetch_data(item_id: str) -> dict:
         return {"id": item_id, "data": "example"}
 
 
-def validate_data(data: dict) -> bool:
+def validate_data(data: dict[str, Any]) -> bool:
     with tracer.start_as_current_span("validate_data") as span:
         print(data.get("id"))
         span.set_attribute("validation.result", True)
@@ -54,7 +55,7 @@ def validate_data(data: dict) -> bool:
         return True
 
 
-def process_request(request_id: str) -> dict:
+def process_request(request_id: str) -> dict[str, Any]:
     """Parent function - creates root span"""
     with tracer.start_as_current_span("process_request") as span:
         span.set_attribute("request.id", request_id)

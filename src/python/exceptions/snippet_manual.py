@@ -65,6 +65,7 @@ def process_order(
                 },
             )
             span.set_status(StatusCode.ERROR, f"Payment error: {exc}")
+            return f"Failed to process order {order_id}: {exc}"
 
 
 # deterministic runs:

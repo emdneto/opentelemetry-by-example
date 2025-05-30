@@ -1,3 +1,5 @@
+# type: ignore
+# --8<-- [start:code]
 import fastapi
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
@@ -29,3 +31,4 @@ async def foobar():
 
 
 FastAPIInstrumentor.instrument_app(app)
+# --8<-- [end:code]
