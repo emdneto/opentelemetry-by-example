@@ -1,0 +1,76 @@
+site_name: OpenTelemetry By Example
+site_description: Curated collection of reproducible OpenTelemetry code snippets
+site_url: https://emdnet.github.io/opentelemetry-by-example
+
+repo_name: emdneto/opentelemetry-by-example
+repo_url: https://github.com/emdneto/opentelemetry-by-example
+edit_uri: edit/main/src/
+
+strict: true
+
+docs_dir: src
+theme:
+  name: "material"
+  palette:
+    - scheme: "default"
+      media: "(prefers-color-scheme: light)"
+      primary: "indigo"
+      toggle:
+        icon: "material/weather-night"
+        name: "Switch to dark mode"
+    - scheme: "slate"
+      media: "(prefers-color-scheme: dark)"
+      primary: "indigo"
+      toggle:
+        icon: "material/weather-sunny"
+        name: "Switch to light mode"
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - content.code.copy
+    - toc.follow
+    - navigation.path
+    - navigation.prune
+    - navigation.indexes
+    - navigation.top
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+
+watch:
+  - "src"
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.snippets:
+      restrict_base_path: true
+      base_path: [".", "src/python"]
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+plugins:
+  - search
+  - tags
+  - meta
+  - macros:
+      module_name: mkdocs_macros
+
+extra:
+  social:
+    - icon: fontawesome/brands/mastodon
+      link: https://fosstodon.org/@squidfunk
+      name: squidfunk on Fosstodon
+
+nav:
+  - Introduction: README.md
+  - Python: python/README.md
+
