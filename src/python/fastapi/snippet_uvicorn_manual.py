@@ -1,23 +1,17 @@
-# /// script
-# requires-python = ">=3.13"
-# dependencies = [
-#     "opentelemetry-api",
-#     "opentelemetry-exporter-otlp-proto-grpc",
-#     "opentelemetry-exporter-otlp-proto-http",
-#     "opentelemetry-sdk",
-# ]
-# ///
+# type: ignore
 # --8<-- [start:code]
+import fastapi
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
     OTLPSpanExporter,
 )
 
 # Creates a resource and adds it to the tracer provider
-resource = Resource.create({"service.name": "hello-world-otlp-grpc"})
+resource = Resource.create({"service.name": "fastapi-uvicorn-manual"})
 provider = TracerProvider(resource=resource)
 trace.set_tracer_provider(provider)
 
@@ -28,11 +22,13 @@ provider.add_span_processor(
     )
 )
 
-tracer = trace.get_tracer(__name__, attributes={"domain": "foo"})
+app = fastapi.FastAPI()
 
-# Starts and sets an attribute to a span
-with tracer.start_as_current_span("HelloWorldSpanGrpc") as span:
-    span.set_attribute("foo", "grpc")
-    span.add_event("event in span")
-    print("Hello world")
+
+@app.get("/foobar")
+async def foobar():
+    return {"message": "hello world"}
+
+
+FastAPIInstrumentor.instrument_app(app)
 # --8<-- [end:code]

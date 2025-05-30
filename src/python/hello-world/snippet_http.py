@@ -1,7 +1,17 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "opentelemetry-api",
+#     "opentelemetry-exporter-otlp-proto-grpc",
+#     "opentelemetry-exporter-otlp-proto-http",
+#     "opentelemetry-sdk",
+# ]
+# ///
+# --8<-- [start:code]
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.resources import Resource
-from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import (
     OTLPSpanExporter,
 )
@@ -13,15 +23,16 @@ trace.set_tracer_provider(provider)
 
 # Adds span processor with the OTLP exporter to the tracer provider
 provider.add_span_processor(
-    SimpleSpanProcessor(
+    BatchSpanProcessor(
         OTLPSpanExporter(endpoint="http://localhost:4318/v1/traces")
     )
 )
 
-tracer = trace.get_tracer(__name__, attributes={"scope": "foo"})
+tracer = trace.get_tracer(__name__, attributes={"domain": "foo"})
 
 # Starts and sets an attribute to a span
 with tracer.start_as_current_span("HelloWorldSpanHttp") as span:
     span.set_attribute("foo", "http")
     span.add_event("event in span")
     print("Hello world")
+# --8<-- [end:code]

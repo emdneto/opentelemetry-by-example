@@ -1,0 +1,4 @@
+# MkDocs and documentation dependencies
+mkdocs>=1.5.0
+mkdocs-material>=9.4.0
+mkdocs-macros-plugin>=1.0.0

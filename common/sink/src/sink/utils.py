@@ -40,6 +40,12 @@ def parse_metric_requests(metric_requests):
 
     return metrics
 
+def _parse_attributes(items):
+    for item in items:
+        attributes = item.get("attributes", {})
+        if attributes:
+            item["attributes"] = parse_attributes(attributes)
+
 
 def parse_trace_requests(trace_requests):
     traces = []
@@ -49,16 +55,21 @@ def parse_trace_requests(trace_requests):
 
         for resource_span in resource_spans:
             resource = resource_span.get("resource", {})
-            resource_attributes = parse_attributes(resource.get("attributes", []))
+            resource_attributes = parse_attributes(resource.get("attributes", {}))
             scope_spans = resource_span.get("scopeSpans", [])
 
             for scope_span in scope_spans:
                 scope = scope_span.get("scope", {})
-                scope_attributes = parse_attributes(scope.get("attributes", []))
+                scope_attributes = parse_attributes(scope.get("attributes", {}))
                 scope["attributes"] = scope_attributes
                 spans = scope_span.get("spans", [])
 
                 for span in spans:
+                    span_events = span.get("events", [])
+                    span_links = span.get("links", [])
+                    _parse_attributes(span_events)
+                    _parse_attributes(span_links)
+
                     traces.append(
                         {
                             "trace_id": decode_base64(span.get("traceId")),
@@ -66,12 +77,13 @@ def parse_trace_requests(trace_requests):
                             "parent_id": decode_base64(span.get("parentSpanId")),
                             "name": span.get("name"),
                             "kind": span.get("kind"),
+                            "status": span.get("status", {}),
                             "start_time": span.get("startTimeUnixNano"),
                             "end_time": span.get("endTimeUnixNano"),
-                            "attributes": parse_attributes(span.get("attributes", [])),
+                            "attributes": parse_attributes(span.get("attributes", {})),
                             "resource": {"attributes": resource_attributes},
-                            "events": span.get("events", []),
-                            "links": span.get("links", []),
+                            "events": span_events,
+                            "links": span_links,
                             "scope": scope,
                         }
                     )

@@ -1,4 +1,5 @@
 def snippet():
-    print('Hello, World!')
+    print("Hello, World!")
+
 
 snippet()
