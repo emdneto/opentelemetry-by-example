@@ -7,11 +7,12 @@ on:
 permissions:
   contents: read
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install uv
         uses: astral-sh/setup-uv@v5
-      - run: uv pip install -r requirements-docs.txt
-      - run: mkdocs build
+        with:
+          enable-cache: true
+      - run: uv run --with-requirements requirements-docs.txt mkdocs build

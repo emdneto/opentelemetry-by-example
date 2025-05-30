@@ -18,8 +18,9 @@ jobs:
           fetch-depth: 0
       - name: Install uv
         uses: astral-sh/setup-uv@v5
-      - run: uv pip install -r requirements-docs.txt
-      - run: mkdocs build
+        with:
+          enable-cache: true
+      - run: uv run --with-requirements requirements-docs.txt mkdocs build
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
