@@ -10,6 +10,11 @@
 # ///
 
 # --8<-- [start:code]
+import time
+import threading
+
+import requests
+from flask import Flask, jsonify, request
 from opentelemetry import trace, propagate
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.resources import Resource
@@ -17,12 +22,10 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
     OTLPSpanExporter,
 )
-import requests
-import threading
-import time
-from flask import Flask, request, jsonify
 
-resource = Resource.create({"service.name": "context-propagation-interprocess"})
+resource = Resource.create(
+    {"service.name": "context-propagation-interprocess"}
+)
 provider = TracerProvider(resource=resource)
 trace.set_tracer_provider(provider)
 
@@ -35,6 +38,7 @@ provider.add_span_processor(
 tracer = trace.get_tracer(__name__)
 
 app = Flask(__name__)
+
 
 @app.route("/api/data", methods=["GET"])
 def get_data():
@@ -51,8 +55,10 @@ def get_data():
         span.add_event("Request processed successfully")
         return jsonify(result)
 
+
 def start_server():
     app.run(host="localhost", port=5001, debug=False, use_reloader=False)
+
 
 def make_http_request() -> dict:
     with tracer.start_as_current_span("client_operation") as span:
@@ -66,7 +72,9 @@ def make_http_request() -> dict:
 
         try:
             # Make HTTP request with propagated context
-            response = requests.get("http://localhost:5001/api/data", headers=headers)
+            response = requests.get(
+                "http://localhost:5001/api/data", headers=headers
+            )
 
             span.set_attribute("http.status_code", response.status_code)
             span.add_event("HTTP request completed")
@@ -75,6 +83,7 @@ def make_http_request() -> dict:
         except Exception as e:
             span.add_event("HTTP request failed", {"error": str(e)})
             return {"error": str(e)}
+
 
 server_thread = threading.Thread(target=start_server, daemon=True)
 server_thread.start()

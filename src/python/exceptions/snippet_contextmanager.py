@@ -15,10 +15,11 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
     OTLPSpanExporter,
 )
-from opentelemetry.trace import Status, StatusCode
 
 # Creates a resource and adds it to the tracer provider
-resource = Resource.create({"service.name": "recording-exceptions-contextmanager"})
+resource = Resource.create(
+    {"service.name": "recording-exceptions-contextmanager"}
+)
 provider = TracerProvider(resource=resource)
 trace.set_tracer_provider(provider)
 

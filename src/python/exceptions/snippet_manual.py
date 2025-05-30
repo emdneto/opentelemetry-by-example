@@ -9,13 +9,13 @@
 
 # --8<-- [start:code]
 from opentelemetry import trace
+from opentelemetry.trace import StatusCode
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
     OTLPSpanExporter,
 )
-from opentelemetry.trace import Status, StatusCode
 
 # Creates a resource and adds it to the tracer provider
 resource = Resource.create({"service.name": "recording-exceptions-manual"})
@@ -30,6 +30,7 @@ provider.add_span_processor(
 )
 
 tracer = trace.get_tracer(__name__)
+
 
 def process_order(
     order_id: str,
@@ -56,11 +57,15 @@ def process_order(
 
         except Exception as exc:
             # record and mark error
-            span.record_exception(exc, {
-                "error.type": type(exc).__name__,
-                "error.stage": "payment processing",
-            })
+            span.record_exception(
+                exc,
+                {
+                    "error.type": type(exc).__name__,
+                    "error.stage": "payment processing",
+                },
+            )
             span.set_status(StatusCode.ERROR, f"Payment error: {exc}")
+
 
 # deterministic runs:
 process_order("ORD-1001", 120.0, will_fail=False)

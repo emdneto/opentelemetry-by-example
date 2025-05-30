@@ -8,12 +8,13 @@
 # ]
 # ///
 # --8<-- [start:code]
-import time
 from opentelemetry import metrics
 from opentelemetry.sdk.metrics import MeterProvider
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
-from opentelemetry.exporter.otlp.proto.http.metric_exporter import OTLPMetricExporter
+from opentelemetry.exporter.otlp.proto.http.metric_exporter import (
+    OTLPMetricExporter,
+)
 
 # Creates a resource and adds it to the meter provider
 resource = Resource.create({"service.name": "hello-world-otlp-http"})
@@ -45,7 +46,11 @@ active_users_gauge = meter.create_up_down_counter(
     unit="1",
 )
 
-request_counter.add(1, {"method": "POST", "endpoint": "/hello", "transport": "http"})
-response_time_histogram.record(0.1, {"method": "POST", "endpoint": "/hello", "transport": "http"})
+request_counter.add(
+    1, {"method": "POST", "endpoint": "/hello", "transport": "http"}
+)
+response_time_histogram.record(
+    0.1, {"method": "POST", "endpoint": "/hello", "transport": "http"}
+)
 active_users_gauge.add(1, {"region": "us-west", "transport": "http"})
 # --8<-- [end:code]

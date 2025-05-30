@@ -17,16 +17,19 @@
 
 # --8<-- [start:code]
 from opentelemetry.instrumentation import auto_instrumentation
-auto_instrumentation.initialize() # Need to initialize first before importing FastAPI
 
-from fastapi import FastAPI
+auto_instrumentation.initialize()  # Need to initialize first before importing FastAPI
+
 import uvicorn
+
 import requests
+from fastapi import FastAPI
 from opentelemetry.trace import get_tracer
 
 tracer = get_tracer(__name__)
 
 app = FastAPI()
+
 
 @app.get("/foobar")
 async def root():
@@ -36,6 +39,7 @@ async def root():
         # Simulate some processing
         requests.get("http://httpbin.org/get?hello=world")
     return {"message": "Hello World"}
+
 
 uvicorn.run(app, host="0.0.0.0", port=3000)
 # --8<-- [end:code]

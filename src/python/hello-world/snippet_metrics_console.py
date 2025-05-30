@@ -8,7 +8,6 @@
 # ]
 # ///
 # --8<-- [start:code]
-import time
 from opentelemetry import metrics
 from opentelemetry.sdk.metrics import MeterProvider
 from opentelemetry.sdk.resources import Resource
