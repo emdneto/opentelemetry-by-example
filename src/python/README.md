@@ -3,7 +3,7 @@
 [![Test Python Snippets](https://github.com/emdneto/opentelemetry-by-example/actions/workflows/python.yml/badge.svg)](https://github.com/emdneto/opentelemetry-by-example/actions/workflows/python.yml)
 [![Minimum Python Version](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/downloads/)
 
-Snippets that will guide you through instrumenting Python applications with [OpenTelemetry Python SDK](https://opentelemetry.io/docs/languages/python/). You'll learn how to implement both manual and automatic instrumentation to emit traces, metrics, and logs to console/OTLP backends.
+Snippets that will guide you through instrumenting Python applications with [OpenTelemetry Python API and SDK](https://opentelemetry.io/docs/languages/python/). You'll learn how to implement both manual and automatic instrumentation to emit traces, metrics, and logs to console/OTLP backends.
 
 ## OpenTelemetry Python in a nutshell
 
@@ -31,8 +31,8 @@ Before starting with this tutorial, ensure you have the following tools installe
 ## List of snippets
 
 Following is a list of all available OpenTelemetry Python snippets:
-<!-- material/tags -->
+<!-- material/tags { scope: true } -->
 
 ---
 
-**Congratulations!** You now have a solid foundation for instrumenting Python applications with OpenTelemetry. Start with the simple examples and gradually add more sophisticated instrumentation as your observability needs grow.
+**Congratulations!** You now have a solid foundation for instrumenting Go applications with OpenTelemetry. Start with the simple examples and gradually add more sophisticated instrumentation as your observability needs grow.
