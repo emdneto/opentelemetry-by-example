@@ -35,4 +35,4 @@ Following is a list of all available OpenTelemetry Python snippets:
 
 ---
 
-**Congratulations!** You now have a solid foundation for instrumenting Go applications with OpenTelemetry. Start with the simple examples and gradually add more sophisticated instrumentation as your observability needs grow.
+**Congratulations!** You now have a solid foundation for instrumenting Python applications with OpenTelemetry. Start with the simple examples and gradually add more sophisticated instrumentation as your observability needs grow.
