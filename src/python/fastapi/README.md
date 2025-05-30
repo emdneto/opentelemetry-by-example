@@ -30,7 +30,7 @@ opentelemetry-bootstrap -a requirements | uv pip install -r -
         opentelemetry-instrument --service_name=fastapi-uvicorn-zerocode uvicorn snippet_uvicorn_auto:app --port 3000 --workers 1
         ```
 
-## Programmaticaly Auto-Instrumentation
+## Programmatic Auto-Instrumentation
 
 ### Using Instrumentors
 
