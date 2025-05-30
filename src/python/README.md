@@ -11,11 +11,11 @@ Snippets that will guide you through instrumenting Python applications with [Ope
     * [ ] [opentelemetry-api](https://pypi.org/project/opentelemetry-api/) - Core API for creating telemetry data
     * [ ] [opentelemetry-sdk](https://pypi.org/project/opentelemetry-sdk/) - Default SDK implementation
     * [ ] [opentelemetry-semantic-conventions](https://pypi.org/project/opentelemetry-semantic-conventions/) - Standard attribute keys and values
-    * [ ] [opentelemetry-proto](https://pypi.org/project/opentelemetry-proto/) - Protocol buffer definitions
+    * [ ] [opentelemetry-proto](https://pypi.org/project/opentelemetry-proto/) - OTLP proto implementation for Python
     * [ ] [opentelemetry-exporter-otlp](https://pypi.org/project/opentelemetry-exporter-otlp/) - OTLP protocol exporters
 * [x] [opentelemetry-python-contrib](https://github.com/open-telemetry/opentelemetry-python-contrib) :material-arrow-right: contrib repository which implements and delivers auto-instrumentation, instrumentation packages and custom implementations of exporters, resource detectors and etc:
     * [ ] [opentelemetry-instrumentation](https://pypi.org/project/opentelemetry-instrumentation/) - Auto-instrumentation utilities
-    * [ ] [opentelemetry-distro](https://pypi.org/project/opentelemetry-distro/) - Meta-package for easy installation
+    * [ ] [opentelemetry-distro](https://pypi.org/project/opentelemetry-distro/) - Default distro which configures opentelemetry
 
 ## Prerequisites
 
