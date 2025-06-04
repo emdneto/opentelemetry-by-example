@@ -1,5 +1,6 @@
 # OpenTelemetry By Example
 
+
 [![docs]][docs-ci]
 
 Your definitive state-of-the-art reference for learning OpenTelemetry with hands-on examples.
