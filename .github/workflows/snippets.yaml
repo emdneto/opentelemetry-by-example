@@ -11,10 +11,6 @@ on:
 env:
   SNIPPET_DIR: src/${{ inputs.stack }}
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
-  cancel-in-progress: true
-
 jobs:
   changed-files:
     name: Determine snippets to test
@@ -85,6 +81,9 @@ jobs:
   test:
     name: "${{ matrix.snippet.name }}"
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ matrix.snippet.name }}-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+      cancel-in-progress: true
     needs: [changed-files]
     if: ${{ needs.changed-files.outputs.has-snippets == 'true' }}
     timeout-minutes: 10
@@ -125,8 +124,8 @@ jobs:
           cache-dependency-path: |
             src/java/*.gradle*
             src/java/**/*.gradle*
-      - name: Install devenv.sh
-        run: nix profile install nixpkgs#devenv
+      - name: Install devenv 1.6
+        run: nix profile install github:NixOS/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb#devenv
       - name: Devenv CI
         working-directory: ${{ matrix.snippet.dir }}
         run: devenv ci -d
