@@ -11,10 +11,6 @@ on:
 env:
   SNIPPET_DIR: src/${{ inputs.stack }}
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
-  cancel-in-progress: true
-
 jobs:
   changed-files:
     name: Determine snippets to test
@@ -85,6 +81,9 @@ jobs:
   test:
     name: "${{ matrix.snippet.name }}"
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ matrix.snippet.name }}-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+      cancel-in-progress: true
     needs: [changed-files]
     if: ${{ needs.changed-files.outputs.has-snippets == 'true' }}
     timeout-minutes: 10
