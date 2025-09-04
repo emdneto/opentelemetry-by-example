@@ -1,4 +1,4 @@
-# OpenTelemetry By Example
+# OpenTelemetry By Example 
 
 [![docs]][docs-ci]
 
